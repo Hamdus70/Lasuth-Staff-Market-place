@@ -1,0 +1,202 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A validated LASUTH staff member.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Authentication UID" },
+        "email": { "type": "string", "description": "Hospital email address" },
+        "displayName": { "type": "string", "description": "Staff member's full name" },
+        "department": { "type": "string", "description": "Hospital department/ward" },
+        "staffId": { "type": "string", "description": "Unique LASUTH Staff Identification Number" },
+        "phone": { "type": "string", "description": "Contact telephone number" },
+        "avatarUrl": { "type": "string", "description": "URL of user avatar image" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "User registration timestamp" }
+      },
+      "required": ["uid", "email", "displayName", "department", "staffId", "phone", "createdAt"]
+    },
+    "Listing": {
+      "title": "Listing",
+      "description": "An item posted for sale on the LASUTH internal marketplace.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "condition": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" },
+        "sellerDepartment": { "type": "string" },
+        "sellerPhone": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "sold", "reported", "archived"] },
+        "aiPassed": { "type": "boolean" },
+        "aiReason": { "type": "string" },
+        "aiSuggestedPrice": { "type": "number" },
+        "aiEnhancedDesc": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "description", "price", "category", "condition", "sellerId", "sellerName", "sellerDepartment", "status", "aiPassed", "createdAt"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "A bargaining offer submitted by a prospective buyer.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "listingId": { "type": "string" },
+        "listingTitle": { "type": "string" },
+        "listingImage": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "originalPrice": { "type": "number" },
+        "offerPrice": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "listingId", "listingTitle", "sellerId", "sellerName", "buyerId", "buyerName", "originalPrice", "offerPrice", "status", "createdAt"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "A purchase record containing secure handover information.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "listingId": { "type": "string" },
+        "listingTitle": { "type": "string" },
+        "listingImage": { "type": "string" },
+        "price": { "type": "number" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "handoverZone": { "type": "string" },
+        "handoverCode": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending_handover", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "listingId", "listingTitle", "price", "sellerId", "sellerName", "buyerId", "buyerName", "handoverZone", "handoverCode", "status", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A private chat message between buyer and seller regarding a listing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "chatId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "chatId", "senderId", "senderName", "text", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "An e-commerce order containing cart items and checkout state.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "buyerPhone": { "type": "string" },
+        "items": { "type": "array" },
+        "handoverZone": { "type": "string" },
+        "handoverCode": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Confirmed/Paid", "Released/Fulfilled"] },
+        "totalAmount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "buyerId", "buyerName", "buyerPhone", "items", "handoverZone", "handoverCode", "status", "totalAmount", "createdAt", "updatedAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "An in-app notification for order state changes.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "recipientId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "success", "warning"] },
+        "orderId": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "recipientId", "title", "message", "type", "read", "createdAt"]
+    },
+    "Wishlist": {
+      "title": "Wishlist",
+      "description": "An item saved for later by an authenticated user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique wishlist item identifier (e.g. userId_listingId)" },
+        "userId": { "type": "string", "description": "UID of the user who saved the item" },
+        "listingId": { "type": "string", "description": "ID of the saved listing" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp when the item was saved" }
+      },
+      "required": ["id", "userId", "listingId", "createdAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable security and administrative auditing logs.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "eventType": { "type": "string" },
+        "userId": { "type": "string" },
+        "staffId": { "type": "string" },
+        "oracleNumber": { "type": "string" },
+        "notes": { "type": "string" },
+        "severity": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "eventType", "notes", "severity"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of hospital staff members."
+    },
+    "/listings/{listingId}": {
+      "schema": "Listing",
+      "description": "Collection of active and past items for sale."
+    },
+    "/offers/{offerId}": {
+      "schema": "Offer",
+      "description": "Collection of bargaining offers."
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Collection of completed or pending handovers."
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Collection of messages inside chat rooms."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of e-commerce checkout orders."
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Collection of instant transactional notification alerts."
+    },
+    "/wishlist/{wishlistId}": {
+      "schema": "Wishlist",
+      "description": "Collection of saved-for-later wishlist items."
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Collection of immutable security and administrative audit logs."
+    }
+  }
+}

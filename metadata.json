@@ -1,0 +1,6 @@
+{
+  "name": "LASUTH Staff Marketplace",
+  "description": "An exclusive, closed-loop internal e-commerce marketplace explicitly designed for Lagos State University Teaching Hospital (LASUTH) staff to securely buy, sell, and track goods with transparent structural accountability.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

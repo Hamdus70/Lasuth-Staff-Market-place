@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Professional Polish Theme Palette */
+  --color-brand-primary: #1e40af;
+  --color-brand-primary-dark: #1e3a8a;
+  --color-brand-accent: #10b981;
+  --color-brand-accent-hover: #059669;
+  --color-brand-bg: #f1f5f9;
+  --color-brand-surface: #ffffff;
+  --color-brand-border: #e2e8f0;
+  --color-brand-text-main: #0f172a;
+  --color-brand-text-muted: #64748b;
+}
+
+@layer utilities {
+  /* Simple scrollbar-none utility */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Fade entering animations for beautiful transitions */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .animate-slide-in {
+    animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
